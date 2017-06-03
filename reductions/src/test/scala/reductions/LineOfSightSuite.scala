@@ -13,6 +13,7 @@ class LineOfSightSuite extends FunSuite {
   import LineOfSight._
   test("lineOfSight should correctly handle an array of size 4") {
     val output = new Array[Float](4)
+    println(output.mkString(", "))
     lineOfSight(Array[Float](0f, 1f, 8f, 9f), output)
     assert(output.toList == List(0f, 1f, 4f, 4f))
   }

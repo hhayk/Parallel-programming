@@ -56,7 +56,7 @@ object ParallelCountChange {
    *  specified list of coins for the specified amount of money.
    */
   def parCountChange(money: Int, coins: List[Int], threshold: Threshold): Int = {
-    if(threshold(money, coins)) countChange(money, coins)
+    if(money <= 0 || coins.isEmpty || threshold(money, coins)) countChange(money, coins)
     else {
       val (l, r) = parallel(parCountChange(money - coins.head, coins, threshold), parCountChange(money, coins.tail, threshold))
       l + r
@@ -71,5 +71,5 @@ object ParallelCountChange {
 
 
   /** Threshold heuristic based on the starting money and the initial list of coins. */
-  def combinedThreshold(startingMoney: Int, allCoins: List[Int]): Threshold = (money, coins) => moneyThreshold(startingMoney)(money, coins) && totalCoinsThreshold(allCoins.length)(money, coins)
+  def combinedThreshold(startingMoney: Int, allCoins: List[Int]): Threshold = (money, coins) => money * coins.length <= startingMoney * allCoins.length / 2
 }
